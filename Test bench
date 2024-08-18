@@ -1,0 +1,65 @@
+module testbenchh;
+
+	// Inputs
+	reg clk;
+	reg reset;
+	reg [1:0] mode;
+	reg [3:0] parallel_in;
+	reg serial_in_left;
+	reg serial_in_right;
+
+	// Outputs
+	wire [3:0] q;
+
+	// Instantiate the Unit Under Test (UUT)
+	unishiftreg uut (
+		.clk(clk), 
+		.reset(reset), 
+		.mode(mode), 
+		.parallel_in(parallel_in), 
+		.serial_in_left(serial_in_left), 
+		.serial_in_right(serial_in_right), 
+		.q(q)
+	);
+	
+	always #10 clk=~clk;
+	
+	initial begin
+
+		// Initialize Inputs
+		clk=1;
+		reset = 1;
+		mode = 2'b00;
+		parallel_in = 0;
+		serial_in_left = 0;
+		serial_in_right = 0;
+		#50;
+		
+		clk=1;
+		reset = 0;
+		mode = 2'b01;
+		parallel_in = 0;
+		serial_in_left = 1;
+		serial_in_right = 0;
+      #50;
+		
+		clk=1;
+		reset = 0;
+		mode = 2'b10;
+		parallel_in = 0;
+		serial_in_left = 0;
+		serial_in_right = 1;
+		#50;
+		
+		clk=1;
+		reset = 0;
+		mode = 2'b11;
+		parallel_in = 4'b1111;
+		serial_in_left = 0;
+		serial_in_right = 0;
+		#50;
+		$finish;
+
+	end
+      
+endmodule
